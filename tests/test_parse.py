@@ -21,15 +21,21 @@ def test_parse_row_builds_a_trip():
 
 
 @pytest.mark.parametrize("field", ["trip_id", "station_id", "distance_m"])
+#מה שמשתנה בין מקרה למקרה זה האינפוט שקוראים לו פילד ואז כל פעם נכנס יוז קייס אחר
 def test_parse_row_rejects_a_missing_field(field: str):
     with pytest.raises(errors.MissingField):
+        #errors זה בעצם קובץ שאחנו צריכים לייצר עם כל ההירככיה של הארורז
         parse_row({k: v for k, v in GOOD.items() if k != field})
+        #רוצים לייצר 3 שורות שבכל שורה אחת העמודות מוסרת ומכניסים את כל הרשומה בלעדיה
+        #
 
 
 @pytest.mark.parametrize("started_at", ["", "yesterday", "2026-13-45T99:99:99"])
 def test_parse_row_rejects_an_unusable_timestamp(started_at: str):
     with pytest.raises(errors.BadTimestamp):
         parse_row(GOOD | {"started_at": started_at})
+        #לוקחים את הגוד ויוצרים ערך חדש שעושים לו עדכון עם הערך שנשלח
+
 
 
 def test_parse_row_rejects_an_absent_timestamp():

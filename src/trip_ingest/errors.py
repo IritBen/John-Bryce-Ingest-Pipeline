@@ -13,4 +13,10 @@ class IngestError(Exception):
     """Anything this ingest raises on purpose."""
 
 
+class RowError(IngestError):
+    pass
+
+#בתרגיל 3 רק לייצר אותם ככה. בלי קוד בפנים
+
+
 # TODO Task 3.

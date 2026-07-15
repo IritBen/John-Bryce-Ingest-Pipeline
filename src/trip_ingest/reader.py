@@ -24,3 +24,5 @@ def read_drop(path: Path) -> Iterator[RawRow]:
 def parse_row(raw: RawRow) -> Trip:
     """Turn one raw JSON object into a `Trip`, or raise. Task 3."""
     raise NotImplementedError
+#pydentic - (reading and writin files)
+#
