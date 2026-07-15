@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Iterator
+import json
 
 from trip_ingest.model import RawRow, Trip
 
@@ -13,7 +14,11 @@ def read_drop(path: Path) -> Iterator[RawRow]:
     Task 2. A drop is a night's trips: it does not fit in memory, and on a bad night it does not fit
     on the machine. Nothing that reads it may hold more than one line at a time.
     """
-    raise NotImplementedError
+    with open(path) as f:
+        for line in f:
+            yield json.loads(line)
+
+
 
 
 def parse_row(raw: RawRow) -> Trip:

@@ -1,0 +1,6 @@
+st = input("Enter a string: ")
+print(st[:5])
+print(st[-5:])
+print(st[::2])
+print(st[:len(st)//2])
+print(st.upper())
