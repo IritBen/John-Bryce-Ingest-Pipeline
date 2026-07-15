@@ -9,11 +9,14 @@ services:
       - "55432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      #use this volume
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U meridian -d meridian_trips"]
+      #I check that the db is ready. if the container is not up it's not possible to do the health check
       interval: 2s
       timeout: 3s
       retries: 20
 
 volumes:
-  - pgdata:
+  pgdata:
+  #available for all containers
