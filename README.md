@@ -151,17 +151,21 @@ situation on a team of four where it would not.
 `src/trip_ingest/loader.py`, `load_trips`. It takes the connection and an **iterable** of trips — which
 will be a generator over a file bigger than memory — and returns how many rows the database did not
 already have.
+#upsert. כמה רשומות הכנסתי שלא היו לפני כן בטבלה
 
 Statement 2 from the pager: rerunning must not double-load. There are two ways to do that.
 
 - Read the existing trip ids into Python and filter. This reads the table back for nothing, and it is a
   **race**: two ingests both look, both see nothing, both insert.
+  #השיטה לא טובה. למשוך את כל המידע מהטבלה ואז אני עושה בדיקה בתוך הפייתון. נגיד יש רשומות שאני מזהה שיכולה להכניס. אם מישהו הריץ את הפייפליין באותו זמן בתהליך אחר שניהם חושבים שהם יכולים להכניס את הדאטה הזה
 - Tell the database to skip what it already has, in the same statement that inserts. It holds the row
   lock; it cannot race with itself.
+  #זה האפסרט. אם אתה רואה שהמידע קיים אל תעשה כלום ואם הוא לא קיים אז תכניס
 
 Take the second. Postgres has a clause for exactly this, and the primary key you created in Task 4 is
 what it needs to work. After the statement runs, the cursor knows how many rows were actually inserted —
 which is the number this function must return, from the only party that can know it.
+#הדאטה בייס אחראי לוודא שזה אפסרט. רק הוא יודע כמה רשומות הוכנסו
 
 One more thing: `load_trips` is handed a lazy stream. It may not call `len()` on it, index it, or walk it
 twice. Batch it, and send a batch per statement rather than a statement per row.
