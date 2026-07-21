@@ -14,9 +14,10 @@ def read_drop(path: Path) -> Iterator[RawRow]:
     Task 2. A drop is a night's trips: it does not fit in memory, and on a bad night it does not fit
     on the machine. Nothing that reads it may hold more than one line at a time.
     """
-    with open(path) as f:
+    with path.open(encoding="utf-8") as f:
         for line in f:
-            yield json.loads(line)
+            if line.strip():
+                yield json.loads(line)
 
 
 
