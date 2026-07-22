@@ -12,11 +12,23 @@ from __future__ import annotations
 class IngestError(Exception):
     """Anything this ingest raises on purpose."""
 
-
 class RowError(IngestError):
     pass
 
-#בתרגיל 3 רק לייצר אותם ככה. בלי קוד בפנים
+class MissingField(RowError):
+    pass
 
+class BadTimestamp(RowError):
+    pass
+
+class NegativeDistance(RowError):
+    pass
+
+class JobError(IngestError):
+    pass
+
+class SlotUnavailable(JobError):
+    pass
+#בתרגיל 3 רק לייצר אותם ככה. בלי קוד בפנים
 
 # TODO Task 3.
